@@ -2,10 +2,17 @@
 #define LEDGERJRI_LEDGERSESSION_H
 #include <string>
 #include <vector>
+#include <memory>
 
 class Ledger;
 class LedgerSessionData;
 class AccountQuery;
+class LedgerValue;
+
+namespace ledger {
+    class scope_t;
+    class account_t;
+}
 
 /**
  * This is an internal session object, which holds the state associated with
@@ -49,6 +56,12 @@ public:
                   AccountQuery& qry,
                   const std::vector<std::string>& args);
 
+    // Calculate display total
+    std::unique_ptr<LedgerValue> CalculateDisplayTotalFromScope(
+            ledger::scope_t& item);
+    std::unique_ptr<LedgerValue> CalculateDisplayTotal(
+            ledger::account_t& item);
+
     // Access to the opaque data object
     LedgerSessionData& Data() { return *data; }
 
@@ -65,5 +78,6 @@ private:
 };
 
 std::ostream& operator<<(std::ostream& os, const LedgerSession::State& state);
+
 
 #endif //LEDGERJRI_LEDGERSESSION_H

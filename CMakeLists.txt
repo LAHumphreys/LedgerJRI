@@ -21,16 +21,28 @@ find_package(Boost REQUIRED COMPONENTS filesystem date_time)
 # Exported Library (libLedgerJRI)
 #
 add_library(LedgerJRI STATIC
-    include/Ledger.h
-    include/LedgerCommands.h
-    include/LedgerQuery.h
-    include/LedgerSession.h
-    include/LedgerSessionData.h
-    src/Ledger.cpp
-    src/LedgerCommands.cpp
-    src/LedgerQuery.cpp
-    src/LedgerSession.cpp
+        include/Ledger.h
+        include/LedgerBalanceQuery.h
+        include/LedgerCommands.h
+        include/LedgerCommodity.h
+        include/LedgerJSON.h
+        include/LedgerQuery.h
+        include/LedgerQueryInterface.h
+        include/LedgerSession.h
+        include/LedgerSessionData.h
+        include/LedgerValue.h
+        src/Ledger.cpp
+        src/LedgerAccount.cpp
+        src/LedgerAmount.cpp
+        src/LedgerBalanceQuery.cpp
+        src/LedgerCommands.cpp
+        src/LedgerCommodity.cpp
+        src/LedgerJSON.cpp
+        src/LedgerQuery.cpp
+        src/LedgerSession.cpp
+        src/LedgerValue.cpp
 )
+
 
 target_link_libraries(LedgerJRI
 PUBLIC
@@ -57,7 +69,11 @@ add_executable(balance test/balance.cpp test/TestUtils.h test/TestUtils.cpp test
 target_link_libraries(balance LedgerJRI FixedJSON::FixedJSON UtilTime::Time GTest::GTest GTest::Main)
 target_compile_features(balance PRIVATE cxx_std_17)
 
-add_executable(allTests   test/TestUtils.h test/TestUtils.cpp test/balance.cpp test/BalancesJSON.h test/BalanceJSON.cpp)
+add_executable(session test/session.cpp test/TestUtils.h test/TestUtils.cpp)
+target_link_libraries(session LedgerJRI FixedJSON::FixedJSON UtilTime::Time GTest::GTest GTest::Main)
+target_compile_features(session PRIVATE cxx_std_17)
+
+add_executable(allTests   test/TestUtils.h test/TestUtils.cpp test/balance.cpp test/session.cpp test/BalancesJSON.h test/BalanceJSON.cpp include/LedgerAmount.h include/LedgerAccount.h test/session.cpp)
 target_link_libraries(allTests LedgerJRI FixedJSON::FixedJSON UtilTime::Time GTest::GTest GTest::Main)
 target_compile_features(allTests PRIVATE cxx_std_17)
 
@@ -70,8 +86,8 @@ find_program(MEMORYCHECK_COMMAND valgrind )
 include (CTest)
 
 enable_testing()
-add_test(accountEmission accountEmission)
-add_test(accounts accounts)
+add_test(session session)
+add_test(balance balance)
 
 #
 # Installation instructions

@@ -1,5 +1,7 @@
 #include <Ledger.h>
 #include <LedgerSessionData.h>
+#include <LedgerSession.h>
+#include <LedgerCommands.h>
 
 Ledger::Ledger() {
     // libLedger one-time setup?

@@ -1,11 +1,13 @@
 #ifndef LEDGERJRI_LEDGER_H
 #define LEDGERJRI_LEDGER_H
-#include <LedgerSession.h>
-#include <LedgerCommands.h>
+
 #include <memory>
 #include <string>
 #include <functional>
 #include <mutex>
+
+class LedgerCommands;
+class LedgerSession;
 
 /**
  * Access point to the Ledger CLI library.
